@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             Vector3 currentVelocity = Vector3.zero;
             Vector3 targetVelocity =
                 new Vector3(Input.GetTouch(0).deltaPosition.normalized.x * sidewaysMovementSpeed, 0f, 0f);
-            float smoothTime = 0.2f;
+            float smoothTime = 0.1f;
 
             _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
         }
