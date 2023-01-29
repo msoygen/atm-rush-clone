@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
 
-    private Vector3 _startPos;
-    private Vector3 _endPos;
+    private Vector2 _touchStartPos;
+    private Vector2 _touchEndPos;
+    private float _swipeSpeed;
 
     private void Start()
     {
@@ -23,41 +24,22 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * (Time.deltaTime * forwardMovementSpeed));
-   /*     
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            _startPos = Input.mousePosition;
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            _endPos = Input.mousePosition;
-
-            Vector3 currentVelocity = Vector3.zero;
-            Vector3 targetVelocity =
-                new Vector3(Input.GetTouch(0).deltaPosition.normalized.x * sidewaysMovementSpeed, 0f, 0f);
-            float smoothTime = 0.2f;
-
-            _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            _startPos = Vector3.zero;
-            _endPos = Vector3.zero;
-            _rb.velocity = Vector3.zero;
-        }
-#endif
-*/
         if (Input.touchCount > 0)
         {
-            Vector3 currentVelocity = Vector3.zero;
-            Vector3 targetVelocity =
-                new Vector3(Input.GetTouch(0).deltaPosition.normalized.x * sidewaysMovementSpeed, 0f, 0f);
-            float smoothTime = 0.1f;
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Vector3 currentVelocity = Vector3.zero;
+                Vector3 targetVelocity =
+                    new Vector3(touch.deltaPosition.normalized.x * sidewaysMovementSpeed, 0f, 0f);
+                float smoothTime = 0.15f;
 
-            _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
+                _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
+            }
+            else if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Began)
+            {
+                _rb.velocity = Vector3.zero;
+            }
         }
         else
         {
@@ -67,6 +49,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(Mathf.Clamp(_rb.position.x, minX, maxX), transform.position.y, transform.position.z);
+        transform.Translate(Vector3.forward * (Time.deltaTime * forwardMovementSpeed));
+
+        transform.position = new Vector3(Mathf.Clamp(_rb.position.x, minX, maxX), transform.position.y,
+            transform.position.z);
     }
 }
