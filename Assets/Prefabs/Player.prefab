@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8217299798641202113}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc9177c53b69e043994f1db654392aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 2930984520740368603}
   minX: -9
   maxX: 9
   sidewaysMovementSpeed: 30
@@ -88,6 +88,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4375185124992987231}
     m_Modifications:
+    - target: {fileID: 1448810342046482171, guid: 6c99eb03937c29a43b19ddba9ad50045,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4826479467464123521, guid: 6c99eb03937c29a43b19ddba9ad50045,
         type: 3}
       propertyPath: m_RootOrder
@@ -150,6 +155,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c99eb03937c29a43b19ddba9ad50045, type: 3}
+--- !u!95 &2930984520740368603 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1448810342046482171, guid: 6c99eb03937c29a43b19ddba9ad50045,
+    type: 3}
+  m_PrefabInstance: {fileID: 4375185125910138400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9100893244842584737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4826479467464123521, guid: 6c99eb03937c29a43b19ddba9ad50045,
