@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+
     [SerializeField] private float minX;
     [SerializeField] private float maxX;
     [SerializeField] private float sidewaysMovementSpeed;
@@ -20,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        
+        animator.SetBool("run", true);
     }
 
     void FixedUpdate()
