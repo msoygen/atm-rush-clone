@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CollectibleManager : MonoBehaviour
+public class CollectedCollectiblesManager : MonoBehaviour
 {
     [SerializeField] private Transform characterTransform;
 

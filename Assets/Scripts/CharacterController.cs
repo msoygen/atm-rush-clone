@@ -9,7 +9,7 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    [SerializeField] private CollectibleManager collectibleManager;
+    [FormerlySerializedAs("collectibleManager")] [SerializeField] private CollectedCollectiblesManager collectedCollectiblesManager;
 
     [SerializeField] private float minX;
     [SerializeField] private float maxX;
@@ -52,7 +52,7 @@ public class CharacterController : MonoBehaviour
         {
             characterRb.velocity = Vector3.zero;
         }
-        collectibleManager.SwerveFollow();
+        collectedCollectiblesManager.SwerveFollow();
     }
 
     private void Update()
@@ -67,7 +67,7 @@ public class CharacterController : MonoBehaviour
     {
         if (other.CompareTag("Money") || other.CompareTag("Gold") || other.CompareTag("Diamond"))
         {
-            collectibleManager.AddCollectible(other.gameObject);
+            collectedCollectiblesManager.AddCollectible(other.gameObject);
         }
     }
 }
