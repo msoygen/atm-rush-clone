@@ -9,12 +9,16 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
+    [SerializeField] private CollectibleManager collectibleManager;
+
     [SerializeField] private float minX;
     [SerializeField] private float maxX;
     [SerializeField] private float sidewaysMovementSpeed;
     [SerializeField] private float forwardMovementSpeed;
 
-    private Rigidbody _rb;
+    [SerializeField] private Rigidbody characterRb;
+
+    [SerializeField] private Transform characterTransform;
 
     private Vector2 _touchStartPos;
     private Vector2 _touchEndPos;
@@ -22,8 +26,6 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
-        
         animator.SetBool("run", true);
     }
 
@@ -39,24 +41,33 @@ public class CharacterController : MonoBehaviour
                     new Vector3(touch.deltaPosition.normalized.x * sidewaysMovementSpeed, 0f, 0f);
                 float smoothTime = 0.15f;
 
-                _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
+                characterRb.velocity = Vector3.SmoothDamp(characterRb.velocity, targetVelocity, ref currentVelocity, smoothTime);
             }
-            else if(touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Began)
+            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Began)
             {
-                _rb.velocity = Vector3.zero;
+                characterRb.velocity = Vector3.zero;
             }
         }
         else
         {
-            _rb.velocity = Vector3.zero;
+            characterRb.velocity = Vector3.zero;
         }
+        collectibleManager.SwerveFollow();
     }
 
     private void Update()
     {
         transform.Translate(Vector3.forward * (Time.deltaTime * forwardMovementSpeed));
 
-        transform.position = new Vector3(Mathf.Clamp(_rb.position.x, minX, maxX), transform.position.y,
-            transform.position.z);
+        characterTransform.position = new Vector3(Mathf.Clamp(characterRb.position.x, minX, maxX), transform.position.y,
+            characterTransform.position.z);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Money") || other.CompareTag("Gold") || other.CompareTag("Diamond"))
+        {
+            collectibleManager.AddCollectible(other.gameObject);
+        }
     }
 }
