@@ -57,6 +57,8 @@ public class CollectedCollectiblesManager : MonoBehaviour
 
         _collectedGameObjectsList.Add(collectible);
 
+        collectible.AddComponent<CollectibleController>();
+
         ShakeCollectedGameObjects();
     }
 
