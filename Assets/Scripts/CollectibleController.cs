@@ -34,8 +34,6 @@ public class CollectibleController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Front collision");
-                
                 CollectedCollectiblesManager.Instance.RemoveCollectible(gameObject);
                 _meshRenderer.enabled = false;
                 _boxCollider.enabled = false;
