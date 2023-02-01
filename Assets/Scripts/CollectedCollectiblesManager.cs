@@ -26,7 +26,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
                 target = _collectedGameObjectsList[i].transform.localPosition;
                 target.x = characterTransform.localPosition.x;
 
-                _collectedGameObjectsList[i].transform.DOLocalMove(target, 0.3f);
+                _collectedGameObjectsList[i].transform.localPosition = target;
             }
             else
             {
