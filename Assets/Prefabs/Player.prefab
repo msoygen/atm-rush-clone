@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4551572978258127758}
-  - component: {fileID: 4551572978258127753}
-  - component: {fileID: 4551572978258127752}
+  - component: {fileID: 487149281}
   - component: {fileID: 4551572978258127755}
   m_Layer: 0
   m_Name: Player
@@ -36,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4551572978258127753
+--- !u!114 &487149281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,30 +44,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4551572978258127759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bc9177c53b69e043994f1db654392aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c11a80fc1608084e9cd647bf6420a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 3112368693621914592}
-  collectibleManager: {fileID: 4551572979402797321}
-  minX: -9
-  maxX: 9
-  sidewaysMovementSpeed: 30
   forwardMovementSpeed: 5
-  characterRb: {fileID: 8546326509878164725}
-  characterTransform: {fileID: 9066157278991524250}
---- !u!65 &4551572978258127752
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4551572978258127759}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.944191, y: 5.213182, z: 5.1687937}
-  m_Center: {x: -0.037388325, y: 2.2561443, z: 1.5235724}
 --- !u!54 &4551572978258127755
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -216,18 +195,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c99eb03937c29a43b19ddba9ad50045, type: 3}
---- !u!95 &3112368693621914592 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1448810342046482171, guid: 6c99eb03937c29a43b19ddba9ad50045,
-    type: 3}
-  m_PrefabInstance: {fileID: 4551572978654430491}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &8546326509878164725 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 5309965153267907054, guid: 6c99eb03937c29a43b19ddba9ad50045,
-    type: 3}
-  m_PrefabInstance: {fileID: 4551572978654430491}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9066157278991524250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4826479467464123521, guid: 6c99eb03937c29a43b19ddba9ad50045,

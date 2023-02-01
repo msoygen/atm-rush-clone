@@ -7,13 +7,22 @@ using UnityEngine.Serialization;
 
 public class CollectedCollectiblesManager : MonoBehaviour
 {
+    public static CollectedCollectiblesManager Instance;
+
     [SerializeField] private Transform characterTransform;
 
-    private List<GameObject> _collectedGameObjectsList;
+    private List<GameObject> _collectedGameObjectsList = new List<GameObject>();
 
-    private void Start()
+    private void Awake()
     {
-        _collectedGameObjectsList = new List<GameObject>();
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     public void SwerveFollow()
@@ -45,14 +54,14 @@ public class CollectedCollectiblesManager : MonoBehaviour
         {
             collectible.transform.position = new Vector3(characterTransform.position.x,
                 collectible.transform.position.y,
-                characterTransform.position.z + 5f);
+                characterTransform.position.z + 1.3f);
         }
         else
         {
             collectible.transform.localPosition =
                 new Vector3(_collectedGameObjectsList[^1].transform.localPosition.x,
                     collectible.transform.localPosition.y,
-                    _collectedGameObjectsList[^1].transform.localPosition.z + 2f);
+                    _collectedGameObjectsList[^1].transform.localPosition.z + 1.1f);
         }
 
         _collectedGameObjectsList.Add(collectible);
@@ -71,8 +80,10 @@ public class CollectedCollectiblesManager : MonoBehaviour
     {
         for (int i = _collectedGameObjectsList.Count - 1; i >= 0; i--)
         {
-            _collectedGameObjectsList[i].transform.DOShakeScale(1f)
-                .SetDelay(0.05f * (_collectedGameObjectsList.Count - i - 1));
+            int index = i;
+            _collectedGameObjectsList[index].transform.DOScale(Vector3.one * 1.5f, 0.2f)
+                .OnComplete(() => _collectedGameObjectsList[index].transform.DOScale(Vector3.one, 0.2f))
+                .SetDelay(0.05f * (_collectedGameObjectsList.Count - index - 1));
         }
     }
 
