@@ -11,9 +11,9 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 targetPos = objectToFollow.position + 
-                            objectToFollow.forward * offset.z + 
-                            objectToFollow.right * offset.x + 
+        Vector3 targetPos = objectToFollow.position +
+                            objectToFollow.forward * offset.z +
+                            objectToFollow.right * offset.x +
                             objectToFollow.up * offset.y;
 
         transform.position = targetPos;

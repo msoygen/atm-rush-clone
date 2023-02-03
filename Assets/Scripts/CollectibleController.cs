@@ -27,35 +27,39 @@ public class CollectibleController : MonoBehaviour
             CollectedCollectiblesManager.Instance.OnFixedObstacleTriggerred(gameObject);
             _meshRenderer.enabled = false;
             _boxCollider.enabled = false;
-            
+
             _particleSystem.Play();
-        }else if (other.CompareTag("Spinning Obstacle"))
+        }
+        else if (other.CompareTag("Spinning Obstacle"))
         {
             CollectedCollectiblesManager.Instance.OnSpinningObstacleTriggered(gameObject);
             _meshRenderer.enabled = false;
             _boxCollider.enabled = false;
-            
+
             _particleSystem.Play();
-        }else if (other.CompareTag("Card Obstacle"))
+        }
+        else if (other.CompareTag("Card Obstacle"))
         {
             CollectedCollectiblesManager.Instance.OnCardObstacleTriggered(gameObject);
             _meshRenderer.enabled = false;
             _boxCollider.enabled = false;
-            
+
             _particleSystem.Play();
-        }else if (other.CompareTag("Swinging Obstacle"))
+        }
+        else if (other.CompareTag("Swinging Obstacle"))
         {
             CollectedCollectiblesManager.Instance.OnSwingingObstacleTriggered(gameObject);
             _meshRenderer.enabled = false;
             _boxCollider.enabled = false;
-            
+
             _particleSystem.Play();
-        }else if (other.CompareTag("Barbed Obstacle"))
+        }
+        else if (other.CompareTag("Barbed Obstacle"))
         {
             CollectedCollectiblesManager.Instance.OnBarbedObstacleTriggered(gameObject);
             _meshRenderer.enabled = false;
             _boxCollider.enabled = false;
-            
+
             _particleSystem.Play();
         }
     }
