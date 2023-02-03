@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 413451012}
   - component: {fileID: 413451013}
   m_Layer: 0
-  m_Name: Spinning_Obstacle
+  m_Name: Spinning Obstacle
   m_TagString: Spinning Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
