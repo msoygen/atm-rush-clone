@@ -10,6 +10,7 @@ TagManager:
   - Fixed Obstacle
   - Spinning Obstacle
   - Card Obstacle
+  - Swinging Obstacle
   layers:
   - Default
   - TransparentFX
