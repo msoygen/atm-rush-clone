@@ -9,6 +9,7 @@ TagManager:
   - Diamond
   - Fixed Obstacle
   - Spinning Obstacle
+  - Card Obstacle
   layers:
   - Default
   - TransparentFX
