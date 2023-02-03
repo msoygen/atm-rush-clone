@@ -24,11 +24,6 @@ public class CollectedCollectiblesManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        transform.Translate(Vector3.forward * (Time.fixedDeltaTime * PlayerManager.Instance.forwardMovementSpeed));
-    }
-
     public void SwerveFollow()
     {
         Vector3 target = Vector3.zero;
@@ -134,6 +129,11 @@ public class CollectedCollectiblesManager : MonoBehaviour
     }
 
     public void OnSwingingObstacleTriggered(GameObject collectible)
+    {
+        CutCollectibleLine(collectible);
+    }
+
+    public void OnBarbedObstacleTriggered(GameObject collectible)
     {
         CutCollectibleLine(collectible);
     }

@@ -11,6 +11,7 @@ TagManager:
   - Spinning Obstacle
   - Card Obstacle
   - Swinging Obstacle
+  - Barbed Obstacle
   layers:
   - Default
   - TransparentFX

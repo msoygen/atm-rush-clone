@@ -45,7 +45,6 @@ public class CharacterController : MonoBehaviour
             _rb.velocity = Vector3.zero;
         }
         
-        transform.Translate(Vector3.forward * (Time.fixedDeltaTime * PlayerManager.Instance.forwardMovementSpeed));
         transform.position = new Vector3(Mathf.Clamp(_rb.position.x, PlayerManager.Instance.minX, PlayerManager.Instance.maxX), transform.position.y,
             transform.position.z);
         
