@@ -90,10 +90,8 @@ public class CollectedCollectiblesManager : MonoBehaviour
         _collectedCollectiblesList.RemoveAt(index);
     }
 
-    private void CutCollectibleLine(GameObject collectible)
+    private void CutCollectibleLine(int index)
     {
-        int index = _collectedCollectiblesList.IndexOf(collectible);
-
         for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
         {
             _collectedCollectiblesList[i].transform.SetParent(null);
@@ -115,27 +113,48 @@ public class CollectedCollectiblesManager : MonoBehaviour
 
     public void OnFixedObstacleTriggerred(GameObject collectible)
     {
-        CutCollectibleLine(collectible);
+        CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
     public void OnSpinningObstacleTriggered(GameObject collectible)
     {
-        CutCollectibleLine(collectible);
+        CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
     public void OnCardObstacleTriggered(GameObject collectible)
     {
-        CutCollectibleLine(collectible);
+        CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
     public void OnSwingingObstacleTriggered(GameObject collectible)
     {
-        CutCollectibleLine(collectible);
+        CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
     public void OnBarbedObstacleTriggered(GameObject collectible)
     {
-        CutCollectibleLine(collectible);
+        CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
+    }
+
+    public void OnPlayerHitObstacle()
+    {
+        for (int i = 0; i < _collectedCollectiblesList.Count; i++)
+        {
+            _collectedCollectiblesList[i].transform.SetParent(null);
+            DOTween.Kill(_collectedCollectiblesList[i].transform);
+
+            _collectedCollectiblesList[i].transform.DOMove(
+                new Vector3(
+                    Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
+                    _collectedCollectiblesList[i].transform.position.y,
+                    _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
+                0.5f);
+        }
+
+        for (int i = _collectedCollectiblesList.Count - 1; i > 0; i--)
+        {
+            RemoveCollectibleFromList(_collectedCollectiblesList.Count - 1);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

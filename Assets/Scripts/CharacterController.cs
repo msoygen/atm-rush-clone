@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    
+
     private Rigidbody _rb;
 
     private Vector2 _touchStartPos;
@@ -30,7 +30,8 @@ public class CharacterController : MonoBehaviour
             {
                 Vector3 currentVelocity = Vector3.zero;
                 Vector3 targetVelocity =
-                    new Vector3(touch.deltaPosition.normalized.x * PlayerManager.Instance.sidewaysMovementSpeed, 0f, 0f);
+                    new Vector3(touch.deltaPosition.normalized.x * PlayerManager.Instance.sidewaysMovementSpeed, 0f,
+                        0f);
                 float smoothTime = 0.15f;
 
                 _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
@@ -44,10 +45,11 @@ public class CharacterController : MonoBehaviour
         {
             _rb.velocity = Vector3.zero;
         }
-        
-        transform.position = new Vector3(Mathf.Clamp(_rb.position.x, PlayerManager.Instance.minX, PlayerManager.Instance.maxX), transform.position.y,
+
+        transform.position = new Vector3(
+            Mathf.Clamp(_rb.position.x, PlayerManager.Instance.minX, PlayerManager.Instance.maxX), transform.position.y,
             transform.position.z);
-        
+
         CollectedCollectiblesManager.Instance.SwerveFollow();
     }
 
@@ -56,6 +58,12 @@ public class CharacterController : MonoBehaviour
         if (other.CompareTag("Money") || other.CompareTag("Gold") || other.CompareTag("Diamond"))
         {
             CollectedCollectiblesManager.Instance.AddCollectible(other.gameObject);
+        }
+        else if (other.CompareTag("Fixed Obstacle") || other.CompareTag("Spinning Obstacle") ||
+                 other.CompareTag("Card Obstacle") || other.CompareTag("Swinging Obstacle") ||
+                 other.CompareTag("Barbed Obstacle"))
+        {
+            PlayerManager.Instance.OnPlayerHitObstacle();
         }
     }
 }
