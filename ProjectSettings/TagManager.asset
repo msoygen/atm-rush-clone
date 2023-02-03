@@ -8,6 +8,7 @@ TagManager:
   - Gold
   - Diamond
   - Fixed Obstacle
+  - Spinning Obstacle
   layers:
   - Default
   - TransparentFX

@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class CollectedCollectiblesManager : MonoBehaviour
 {
     public static CollectedCollectiblesManager Instance;
-
-    [SerializeField] private Transform characterTransform;
 
     private List<GameObject> _collectedCollectiblesList = new List<GameObject>();
 
@@ -25,9 +24,9 @@ public class CollectedCollectiblesManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, characterTransform.position.z);
+        transform.Translate(Vector3.forward * (Time.fixedDeltaTime * PlayerManager.Instance.forwardMovementSpeed));
     }
 
     public void SwerveFollow()
@@ -38,7 +37,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
             if (i == 0)
             {
                 target = _collectedCollectiblesList[i].transform.localPosition;
-                target.x = characterTransform.position.x;
+                target.x = PlayerManager.Instance.characterTransform.position.x;
 
                 _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.3f);
             }
@@ -56,13 +55,13 @@ public class CollectedCollectiblesManager : MonoBehaviour
     {
         if (_collectedCollectiblesList.Contains(collectible))
             return;
-        
+
         collectible.transform.SetParent(transform);
         if (_collectedCollectiblesList.Count == 0)
         {
-            collectible.transform.position = new Vector3(characterTransform.position.x,
+            collectible.transform.position = new Vector3(PlayerManager.Instance.characterTransform.position.x,
                 collectible.transform.position.y,
-                characterTransform.position.z + 2.5f);
+                PlayerManager.Instance.characterTransform.position.z + 2.5f);
         }
         else
         {
@@ -109,13 +108,42 @@ public class CollectedCollectiblesManager : MonoBehaviour
         for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
         {
             _collectedCollectiblesList[i].transform.SetParent(null);
+            DOTween.Kill(_collectedCollectiblesList[i].transform);
 
-            _collectedCollectiblesList[i].transform.position += Vector3.forward * 4;
+            _collectedCollectiblesList[i].transform.DOMove(
+                new Vector3(
+                    Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
+                    _collectedCollectiblesList[i].transform.position.y,
+                    _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
+                0.5f);
         }
 
         for (int i = _collectedCollectiblesList.Count - index; i > 0; i--)
         {
-            RemoveCollectibleFromList(_collectedCollectiblesList.Count-1);
+            RemoveCollectibleFromList(_collectedCollectiblesList.Count - 1);
+        }
+    }
+
+    public void OnSpinningObstacleTriggered(GameObject collectible)
+    {
+        int index = _collectedCollectiblesList.IndexOf(collectible);
+
+        for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
+        {
+            _collectedCollectiblesList[i].transform.SetParent(null);
+            DOTween.Kill(_collectedCollectiblesList[i].transform);
+
+            _collectedCollectiblesList[i].transform.DOMove(
+                new Vector3(
+                    Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
+                    _collectedCollectiblesList[i].transform.position.y,
+                    _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
+                0.5f);
+        }
+
+        for (int i = _collectedCollectiblesList.Count - index; i > 0; i--)
+        {
+            RemoveCollectibleFromList(_collectedCollectiblesList.Count - 1);
         }
     }
 

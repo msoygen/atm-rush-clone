@@ -29,6 +29,13 @@ public class CollectibleController : MonoBehaviour
             _boxCollider.enabled = false;
             
             _particleSystem.Play();
+        }else if (other.CompareTag("Spinning Obstacle"))
+        {
+            CollectedCollectiblesManager.Instance.OnSpinningObstacleTriggered(gameObject);
+            _meshRenderer.enabled = false;
+            _boxCollider.enabled = false;
+            
+            _particleSystem.Play();
         }
     }
 }
