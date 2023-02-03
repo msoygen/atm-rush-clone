@@ -11,7 +11,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
 
     [SerializeField] private Transform characterTransform;
 
-    private List<GameObject> _collectedGameObjectsList = new List<GameObject>();
+    private List<GameObject> _collectedCollectiblesList = new List<GameObject>();
 
     private void Awake()
     {
@@ -25,65 +25,97 @@ public class CollectedCollectiblesManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, characterTransform.position.z);
+    }
+
     public void SwerveFollow()
     {
         Vector3 target = Vector3.zero;
-        for (int i = 0; i < _collectedGameObjectsList.Count; i++)
+        for (int i = 0; i < _collectedCollectiblesList.Count; i++)
         {
             if (i == 0)
             {
-                target = _collectedGameObjectsList[i].transform.localPosition;
-                target.x = characterTransform.localPosition.x;
+                target = _collectedCollectiblesList[i].transform.localPosition;
+                target.x = characterTransform.position.x;
 
-                _collectedGameObjectsList[i].transform.localPosition = target;
+                _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.3f);
             }
             else
             {
-                target = _collectedGameObjectsList[i].transform.localPosition;
-                target.x = _collectedGameObjectsList[i - 1].transform.localPosition.x;
+                target = _collectedCollectiblesList[i].transform.localPosition;
+                target.x = _collectedCollectiblesList[i - 1].transform.localPosition.x;
 
-                _collectedGameObjectsList[i].transform.DOLocalMove(target, 0.3f);
+                _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.3f);
             }
         }
     }
 
     public void AddCollectible(GameObject collectible)
     {
+        if (_collectedCollectiblesList.Contains(collectible))
+            return;
+        
         collectible.transform.SetParent(transform);
-        if (_collectedGameObjectsList.Count == 0)
+        if (_collectedCollectiblesList.Count == 0)
         {
             collectible.transform.position = new Vector3(characterTransform.position.x,
                 collectible.transform.position.y,
-                characterTransform.position.z + 1.3f);
+                characterTransform.position.z + 2.5f);
         }
         else
         {
             collectible.transform.localPosition =
-                new Vector3(_collectedGameObjectsList[^1].transform.localPosition.x,
+                new Vector3(_collectedCollectiblesList[^1].transform.localPosition.x,
                     collectible.transform.localPosition.y,
-                    _collectedGameObjectsList[^1].transform.localPosition.z + 1.1f);
+                    _collectedCollectiblesList[^1].transform.localPosition.z + 1.6f);
         }
 
-        _collectedGameObjectsList.Add(collectible);
+        _collectedCollectiblesList.Add(collectible);
 
         collectible.AddComponent<CollectibleController>();
 
         ShakeCollectedGameObjects();
     }
 
-    public void RemoveCollectible(GameObject collectible)
+    public void RemoveCollectibleFromList(GameObject collectible)
     {
-        _collectedGameObjectsList.Remove(collectible);
+        Destroy(collectible.GetComponent<CollectibleController>());
+        _collectedCollectiblesList.Remove(collectible);
+    }
+
+    public void RemoveCollectibleFromList(int index)
+    {
+        Destroy(_collectedCollectiblesList[index].GetComponent<CollectibleController>());
+        _collectedCollectiblesList.RemoveAt(index);
     }
 
     private void ShakeCollectedGameObjects()
     {
-        for (int i = _collectedGameObjectsList.Count - 1; i >= 0; i--)
+        for (int i = _collectedCollectiblesList.Count - 1; i >= 0; i--)
         {
             int index = i;
-            _collectedGameObjectsList[index].transform.DOScale(Vector3.one * 1.5f, 0.2f)
-                .OnComplete(() => _collectedGameObjectsList[index].transform.DOScale(Vector3.one, 0.2f))
-                .SetDelay(0.05f * (_collectedGameObjectsList.Count - index - 1));
+            _collectedCollectiblesList[index].transform.DOScale(Vector3.one * 1.5f, 0.2f)
+                .OnComplete(() => _collectedCollectiblesList[index].transform.DOScale(Vector3.one, 0.2f))
+                .SetDelay(0.05f * (_collectedCollectiblesList.Count - index - 1));
+        }
+    }
+
+    public void OnFixedObstacleTriggerred(GameObject collectible)
+    {
+        int index = _collectedCollectiblesList.IndexOf(collectible);
+
+        for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
+        {
+            _collectedCollectiblesList[i].transform.SetParent(null);
+
+            _collectedCollectiblesList[i].transform.position += Vector3.forward * 4;
+        }
+
+        for (int i = _collectedCollectiblesList.Count - index; i > 0; i--)
+        {
+            RemoveCollectibleFromList(_collectedCollectiblesList.Count-1);
         }
     }
 

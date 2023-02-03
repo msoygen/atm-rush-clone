@@ -1426,6 +1426,7 @@ MonoBehaviour:
   minX: -4.5
   maxX: 4.5
   sidewaysMovementSpeed: 30
+  forwardMovementSpeed: 5
 --- !u!54 &5309965153267907054
 Rigidbody:
   m_ObjectHideFlags: 0

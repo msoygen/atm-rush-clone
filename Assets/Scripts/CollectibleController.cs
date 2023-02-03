@@ -24,22 +24,11 @@ public class CollectibleController : MonoBehaviour
     {
         if (other.CompareTag("Fixed Obstacle"))
         {
-            _relativePosition = transform.position - other.bounds.center;
-
-            float dot = Vector3.Dot(_relativePosition, _forward) / _relativePosition.magnitude;
-
-            if (dot > -0.1f && dot < 0.1f)
-            {
-                Debug.Log("Side collision");
-            }
-            else
-            {
-                CollectedCollectiblesManager.Instance.RemoveCollectible(gameObject);
-                _meshRenderer.enabled = false;
-                _boxCollider.enabled = false;
-
-                _particleSystem.Play();
-            }
+            CollectedCollectiblesManager.Instance.OnFixedObstacleTriggerred(gameObject);
+            _meshRenderer.enabled = false;
+            _boxCollider.enabled = false;
+            
+            _particleSystem.Play();
         }
     }
 }

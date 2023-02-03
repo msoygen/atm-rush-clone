@@ -54,6 +54,7 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
+        transform.Translate(Vector3.forward * (Time.deltaTime * 5));
         transform.position = new Vector3(Mathf.Clamp(_rb.position.x, minX, maxX), transform.position.y,
             transform.position.z);
     }
