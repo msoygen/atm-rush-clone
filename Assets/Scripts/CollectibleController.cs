@@ -36,6 +36,13 @@ public class CollectibleController : MonoBehaviour
             _boxCollider.enabled = false;
             
             _particleSystem.Play();
+        }else if (other.CompareTag("Card Obstacle"))
+        {
+            CollectedCollectiblesManager.Instance.OnCardObstacleTriggered(gameObject);
+            _meshRenderer.enabled = false;
+            _boxCollider.enabled = false;
+            
+            _particleSystem.Play();
         }
     }
 }

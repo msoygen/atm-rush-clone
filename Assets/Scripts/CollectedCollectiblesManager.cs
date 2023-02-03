@@ -51,6 +51,17 @@ public class CollectedCollectiblesManager : MonoBehaviour
         }
     }
 
+    private void ShakeCollectedGameObjects()
+    {
+        for (int i = _collectedCollectiblesList.Count - 1; i >= 0; i--)
+        {
+            int index = i;
+            _collectedCollectiblesList[index].transform.DOScale(Vector3.one * 1.5f, 0.2f)
+                .OnComplete(() => _collectedCollectiblesList[index].transform.DOScale(Vector3.one, 0.2f))
+                .SetDelay(0.05f * (_collectedCollectiblesList.Count - index - 1));
+        }
+    }
+
     public void AddCollectible(GameObject collectible)
     {
         if (_collectedCollectiblesList.Contains(collectible))
@@ -78,73 +89,48 @@ public class CollectedCollectiblesManager : MonoBehaviour
         ShakeCollectedGameObjects();
     }
 
-    public void RemoveCollectibleFromList(GameObject collectible)
-    {
-        Destroy(collectible.GetComponent<CollectibleController>());
-        _collectedCollectiblesList.Remove(collectible);
-    }
-
     public void RemoveCollectibleFromList(int index)
     {
         Destroy(_collectedCollectiblesList[index].GetComponent<CollectibleController>());
         _collectedCollectiblesList.RemoveAt(index);
     }
 
-    private void ShakeCollectedGameObjects()
+    private void CutCollectibleLine(GameObject collectible)
     {
-        for (int i = _collectedCollectiblesList.Count - 1; i >= 0; i--)
+        int index = _collectedCollectiblesList.IndexOf(collectible);
+
+        for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
         {
-            int index = i;
-            _collectedCollectiblesList[index].transform.DOScale(Vector3.one * 1.5f, 0.2f)
-                .OnComplete(() => _collectedCollectiblesList[index].transform.DOScale(Vector3.one, 0.2f))
-                .SetDelay(0.05f * (_collectedCollectiblesList.Count - index - 1));
+            _collectedCollectiblesList[i].transform.SetParent(null);
+            DOTween.Kill(_collectedCollectiblesList[i].transform);
+
+            _collectedCollectiblesList[i].transform.DOMove(
+                new Vector3(
+                    Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
+                    _collectedCollectiblesList[i].transform.position.y,
+                    _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
+                0.5f);
+        }
+
+        for (int i = _collectedCollectiblesList.Count - index; i > 0; i--)
+        {
+            RemoveCollectibleFromList(_collectedCollectiblesList.Count - 1);
         }
     }
 
     public void OnFixedObstacleTriggerred(GameObject collectible)
     {
-        int index = _collectedCollectiblesList.IndexOf(collectible);
-
-        for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
-        {
-            _collectedCollectiblesList[i].transform.SetParent(null);
-            DOTween.Kill(_collectedCollectiblesList[i].transform);
-
-            _collectedCollectiblesList[i].transform.DOMove(
-                new Vector3(
-                    Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
-                    _collectedCollectiblesList[i].transform.position.y,
-                    _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
-                0.5f);
-        }
-
-        for (int i = _collectedCollectiblesList.Count - index; i > 0; i--)
-        {
-            RemoveCollectibleFromList(_collectedCollectiblesList.Count - 1);
-        }
+        CutCollectibleLine(collectible);
     }
 
     public void OnSpinningObstacleTriggered(GameObject collectible)
     {
-        int index = _collectedCollectiblesList.IndexOf(collectible);
+        CutCollectibleLine(collectible);
+    }
 
-        for (int i = index + 1; i < _collectedCollectiblesList.Count; i++)
-        {
-            _collectedCollectiblesList[i].transform.SetParent(null);
-            DOTween.Kill(_collectedCollectiblesList[i].transform);
-
-            _collectedCollectiblesList[i].transform.DOMove(
-                new Vector3(
-                    Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
-                    _collectedCollectiblesList[i].transform.position.y,
-                    _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
-                0.5f);
-        }
-
-        for (int i = _collectedCollectiblesList.Count - index; i > 0; i--)
-        {
-            RemoveCollectibleFromList(_collectedCollectiblesList.Count - 1);
-        }
+    public void OnCardObstacleTriggered(GameObject collectible)
+    {
+        CutCollectibleLine(collectible);
     }
 
     private void OnTriggerEnter(Collider other)

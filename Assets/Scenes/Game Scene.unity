@@ -879,11 +879,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spinning Obstacle
       objectReference: {fileID: 0}
-    - target: {fileID: 778336430985665114, guid: 81c4d0b5116661845b3154b79f11de50,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2207564715637416889, guid: 81c4d0b5116661845b3154b79f11de50,
         type: 3}
       propertyPath: m_RootOrder
@@ -1703,11 +1698,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fixed Obstacle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378710121343733630, guid: ca9b444e579290a469d9ccd2daf9d02e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8865143177398039574, guid: ca9b444e579290a469d9ccd2daf9d02e,
         type: 3}
