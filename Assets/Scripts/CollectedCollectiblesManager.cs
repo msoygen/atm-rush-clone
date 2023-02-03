@@ -133,6 +133,11 @@ public class CollectedCollectiblesManager : MonoBehaviour
         CutCollectibleLine(collectible);
     }
 
+    public void OnSwingingObstacleTriggered(GameObject collectible)
+    {
+        CutCollectibleLine(collectible);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Money") || other.CompareTag("Gold") || other.CompareTag("Diamond"))

@@ -43,6 +43,13 @@ public class CollectibleController : MonoBehaviour
             _boxCollider.enabled = false;
             
             _particleSystem.Play();
+        }else if (other.CompareTag("Swinging Obstacle"))
+        {
+            CollectedCollectiblesManager.Instance.OnSwingingObstacleTriggered(gameObject);
+            _meshRenderer.enabled = false;
+            _boxCollider.enabled = false;
+            
+            _particleSystem.Play();
         }
     }
 }
