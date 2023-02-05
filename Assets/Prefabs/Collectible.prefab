@@ -47,8 +47,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2810493, y: 0.77625, z: 1.1983976}
-  m_Center: {x: 0.0018785, y: 0.45, z: -0.0018782616}
+  m_Size: {x: 1.587033, y: 0.77625, z: 1.0689433}
+  m_Center: {x: 0.0018785, y: 0.45, z: 0.00008311868}
 --- !u!114 &5593143445381324589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,36 +158,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1838415350147675246}
     m_Modifications:
-    - target: {fileID: 1390287888693464367, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
-        type: 3}
-      propertyPath: InitialModule.startRotationX.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1390287888693464367, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
-        type: 3}
-      propertyPath: InitialModule.startRotationY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967115651951431312, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
-        type: 3}
-      propertyPath: InitialModule.startSizeY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967115651951431312, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
-        type: 3}
-      propertyPath: InitialModule.startSizeZ.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967115651951431312, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
-        type: 3}
-      propertyPath: InitialModule.startRotationX.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2967115651951431312, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
-        type: 3}
-      propertyPath: InitialModule.startRotationY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4102881759295255810, guid: 4651e5bb764dcb94fa53cb4abecc74e8,
         type: 3}
       propertyPath: m_Name
@@ -278,11 +248,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Money
-      objectReference: {fileID: 0}
-    - target: {fileID: 2162174412404176585, guid: 4835e808944b44e46860ad31246e0c48,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3761976020047996930, guid: 4835e808944b44e46860ad31246e0c48,
         type: 3}

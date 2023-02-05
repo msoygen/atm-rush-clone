@@ -34,14 +34,14 @@ public class CollectedCollectiblesManager : MonoBehaviour
                 target = _collectedCollectiblesList[i].transform.localPosition;
                 target.x = PlayerManager.Instance.characterTransform.position.x;
 
-                _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.3f);
+                _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.2f);
             }
             else
             {
                 target = _collectedCollectiblesList[i].transform.localPosition;
                 target.x = _collectedCollectiblesList[i - 1].transform.localPosition.x;
 
-                _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.3f);
+                _collectedCollectiblesList[i].transform.DOLocalMove(target, 0.2f);
             }
         }
     }
@@ -54,12 +54,12 @@ public class CollectedCollectiblesManager : MonoBehaviour
             
             CollectibleController collectible = _collectedCollectiblesList[index];
             
-            collectible.transform.DOScale(Vector3.one * 1.5f, 0.2f)
+            collectible.transform.DOScale(Vector3.one * 1.5f, 0.17f)
                 .OnComplete(() =>
                 {
-                    collectible.transform.DOScale(Vector3.one, 0.2f);
+                    collectible.transform.DOScale(Vector3.one, 0.17f);
                 })
-                .SetDelay(0.05f * (_collectedCollectiblesList.Count - index - 1));
+                .SetDelay(0.08f * (_collectedCollectiblesList.Count - index - 1));
         }
     }
 
@@ -77,14 +77,14 @@ public class CollectedCollectiblesManager : MonoBehaviour
         {
             collectible.transform.position = new Vector3(PlayerManager.Instance.characterTransform.position.x,
                 collectible.transform.position.y,
-                PlayerManager.Instance.characterTransform.position.z + 2.5f);
+                PlayerManager.Instance.characterTransform.position.z + 2f);
         }
         else
         {
             collectible.transform.localPosition =
                 new Vector3(_collectedCollectiblesList[^1].transform.localPosition.x,
                     collectible.transform.localPosition.y,
-                    _collectedCollectiblesList[^1].transform.localPosition.z + 1.6f);
+                    _collectedCollectiblesList[^1].transform.localPosition.z + 1.2f);
         }
         
         _collectedCollectiblesList.Add(collectible);
