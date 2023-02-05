@@ -10,7 +10,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
 {
     public static CollectedCollectiblesManager Instance;
 
-    private List<GameObject> _collectedCollectiblesList = new List<GameObject>();
+    private List<CollectibleController> _collectedCollectiblesList = new List<CollectibleController>();
 
     private void Awake()
     {
@@ -57,10 +57,12 @@ public class CollectedCollectiblesManager : MonoBehaviour
         }
     }
 
-    public void AddCollectible(GameObject collectible)
+    public void AddCollectible(CollectibleController collectible)
     {
         if (_collectedCollectiblesList.Contains(collectible))
             return;
+        
+        collectible.isCollected = true;
 
         collectible.transform.SetParent(transform);
         if (_collectedCollectiblesList.Count == 0)
@@ -79,14 +81,12 @@ public class CollectedCollectiblesManager : MonoBehaviour
 
         _collectedCollectiblesList.Add(collectible);
 
-        collectible.AddComponent<CollectibleController>();
-
         ShakeCollectedGameObjects();
     }
 
     public void RemoveCollectibleFromList(int index)
     {
-        Destroy(_collectedCollectiblesList[index].GetComponent<CollectibleController>());
+        _collectedCollectiblesList[index].isCollected = false;
         _collectedCollectiblesList.RemoveAt(index);
     }
 
@@ -111,27 +111,27 @@ public class CollectedCollectiblesManager : MonoBehaviour
         }
     }
 
-    public void OnFixedObstacleTriggerred(GameObject collectible)
+    public void OnFixedObstacleTriggerred(CollectibleController collectible)
     {
         CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
-    public void OnSpinningObstacleTriggered(GameObject collectible)
+    public void OnSpinningObstacleTriggered(CollectibleController collectible)
     {
         CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
-    public void OnCardObstacleTriggered(GameObject collectible)
+    public void OnCardObstacleTriggered(CollectibleController collectible)
     {
         CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
-    public void OnSwingingObstacleTriggered(GameObject collectible)
+    public void OnSwingingObstacleTriggered(CollectibleController collectible)
     {
         CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
 
-    public void OnBarbedObstacleTriggered(GameObject collectible)
+    public void OnBarbedObstacleTriggered(CollectibleController collectible)
     {
         CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
     }
@@ -159,9 +159,9 @@ public class CollectedCollectiblesManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Money") || other.CompareTag("Gold") || other.CompareTag("Diamond"))
+        if (other.CompareTag("Collectible"))
         {
-            AddCollectible(other.gameObject);
+            AddCollectible(other.gameObject.GetComponent<CollectibleController>());
         }
     }
 }

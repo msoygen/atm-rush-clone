@@ -12,6 +12,9 @@ TagManager:
   - Card Obstacle
   - Swinging Obstacle
   - Barbed Obstacle
+  - Upgrade Gate
+  - Collectible
+  - ATM
   layers:
   - Default
   - TransparentFX

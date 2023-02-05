@@ -55,9 +55,9 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Money") || other.CompareTag("Gold") || other.CompareTag("Diamond"))
+        if (other.CompareTag("Collectible"))
         {
-            CollectedCollectiblesManager.Instance.AddCollectible(other.gameObject);
+            CollectedCollectiblesManager.Instance.AddCollectible(other.gameObject.GetComponent<CollectibleController>());
         }
         else if (other.CompareTag("Fixed Obstacle") || other.CompareTag("Spinning Obstacle") ||
                  other.CompareTag("Card Obstacle") || other.CompareTag("Swinging Obstacle") ||
