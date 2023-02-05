@@ -32,7 +32,7 @@ public class CharacterController : MonoBehaviour
                 Vector3 targetVelocity =
                     new Vector3(touch.deltaPosition.normalized.x * PlayerManager.Instance.sidewaysMovementSpeed, 0f,
                         0f);
-                float smoothTime = 0.15f;
+                float smoothTime = 0.1f;
 
                 _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref currentVelocity, smoothTime);
             }
@@ -49,7 +49,7 @@ public class CharacterController : MonoBehaviour
         transform.position = new Vector3(
             Mathf.Clamp(_rb.position.x, PlayerManager.Instance.minX, PlayerManager.Instance.maxX), transform.position.y,
             transform.position.z);
-
+        
         CollectedCollectiblesManager.Instance.SwerveFollow();
     }
 

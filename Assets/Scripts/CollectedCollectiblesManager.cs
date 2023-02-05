@@ -28,6 +28,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
     {
         for (int i = 0; i < _collectedCollectiblesList.Count; i++)
         {
+            DOTween.Kill(_collectedCollectiblesList[i]);
             Vector3 target = Vector3.zero;
             if (i == 0)
             {
