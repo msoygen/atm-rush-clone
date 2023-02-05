@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -75,7 +76,7 @@ public class CollectibleController : MonoBehaviour
         }
     }
 
-    private void OnATMTriggered()
+    public void OnATMTriggered()
     {
         _currentMeshRenderer.enabled = false;
         _boxCollider.enabled = false;
@@ -117,8 +118,7 @@ public class CollectibleController : MonoBehaviour
             SwapCollectible();
         }else if (other.CompareTag("ATM"))
         {
-            CollectedCollectiblesManager.Instance.OnATMTriggered(this);
-            OnATMTriggered();
+            CollectedCollectiblesManager.Instance.OnATMTriggered(this, other.gameObject);
         }
     }
 }
