@@ -88,6 +88,27 @@ public class CollectedCollectiblesManager : MonoBehaviour
     {
         _collectedCollectiblesList[index].isCollected = false;
         _collectedCollectiblesList.RemoveAt(index);
+        ReArrangeCollectibleLine();
+    }
+
+    private void ReArrangeCollectibleLine()
+    {
+        foreach (CollectibleController collectible in _collectedCollectiblesList)
+        {
+            if (_collectedCollectiblesList.Count == 0)
+            {
+                collectible.transform.position = new Vector3(PlayerManager.Instance.characterTransform.position.x,
+                    collectible.transform.position.y,
+                    PlayerManager.Instance.characterTransform.position.z + 2.5f);
+            }
+            else
+            {
+                collectible.transform.localPosition =
+                    new Vector3(_collectedCollectiblesList[^1].transform.localPosition.x,
+                        collectible.transform.localPosition.y,
+                        _collectedCollectiblesList[^1].transform.localPosition.z + 1.6f);
+            }
+        }
     }
 
     private void CutCollectibleLine(int index)
@@ -134,6 +155,17 @@ public class CollectedCollectiblesManager : MonoBehaviour
     public void OnBarbedObstacleTriggered(CollectibleController collectible)
     {
         CutCollectibleLine(_collectedCollectiblesList.IndexOf(collectible));
+    }
+
+    public void OnUpgradeGateTriggered(CollectibleController collectible)
+    {
+        collectible.transform.DOScale(Vector3.one * 1.5f, 0.2f)
+            .OnComplete(() => collectible.transform.DOScale(Vector3.one, 0.2f));
+    }
+
+    public void OnATMTriggered(CollectibleController collectible)
+    {
+        RemoveCollectibleFromList(_collectedCollectiblesList.IndexOf(collectible));
     }
 
     public void OnPlayerHitObstacle()

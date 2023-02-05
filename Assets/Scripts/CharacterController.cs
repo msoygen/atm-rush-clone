@@ -64,6 +64,9 @@ public class CharacterController : MonoBehaviour
                  other.CompareTag("Barbed Obstacle"))
         {
             PlayerManager.Instance.OnPlayerHitObstacle();
+        }else if (other.CompareTag("ATM"))
+        {
+            other.transform.DOMoveY(-2.5f, 0.2f);
         }
     }
 }

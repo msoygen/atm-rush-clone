@@ -75,6 +75,13 @@ public class CollectibleController : MonoBehaviour
         }
     }
 
+    private void OnATMTriggered()
+    {
+        _currentMeshRenderer.enabled = false;
+        _boxCollider.enabled = false;
+        _currentParticleSystem.Play();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!isCollected) return;
@@ -106,7 +113,12 @@ public class CollectibleController : MonoBehaviour
         }
         else if (other.CompareTag("Upgrade Gate"))
         {
+            CollectedCollectiblesManager.Instance.OnUpgradeGateTriggered(this);
             SwapCollectible();
+        }else if (other.CompareTag("ATM"))
+        {
+            CollectedCollectiblesManager.Instance.OnATMTriggered(this);
+            OnATMTriggered();
         }
     }
 }
