@@ -15,6 +15,7 @@ TagManager:
   - Upgrade Gate
   - Collectible
   - ATM
+  - Conveyor Belt
   layers:
   - Default
   - TransparentFX

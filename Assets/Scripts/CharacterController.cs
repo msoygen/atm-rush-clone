@@ -67,6 +67,11 @@ public class CharacterController : MonoBehaviour
         }else if (other.CompareTag("ATM"))
         {
             other.transform.DOMoveY(-2.5f, 0.2f);
+        }else if (other.CompareTag("Conveyor Belt"))
+        {
+            PlayerManager.Instance.OnPlayerTriggeredConveyorBelt();
+            animator.SetBool("idle", true);
+            transform.DOScale(0.1f, 0.5f).SetDelay(0.5f).OnComplete(() => gameObject.SetActive(false));
         }
     }
 }

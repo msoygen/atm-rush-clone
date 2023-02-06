@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4927648885105975489}
   - component: {fileID: 6271164463578317634}
   m_Layer: 0
-  m_Name: Walking_Platform
+  m_Name: Conveyor Belt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

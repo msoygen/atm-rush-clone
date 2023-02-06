@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class CollectibleController : MonoBehaviour
 {
-    enum CollectibleType
+    public enum CollectibleType
     {
         Money,
         Gold,
@@ -32,7 +32,7 @@ public class CollectibleController : MonoBehaviour
 
 
     public bool isCollected = false;
-    private CollectibleType _currentType = CollectibleType.Money;
+    public CollectibleType currentType = CollectibleType.Money;
 
     private void Start()
     {
@@ -58,21 +58,21 @@ public class CollectibleController : MonoBehaviour
 
     private void SwapCollectible()
     {
-        if (_currentType == CollectibleType.Money)
+        if (currentType == CollectibleType.Money)
         {
             money.SetActive(false);
             gold.SetActive(true);
             _currentMeshRenderer = _goldMeshRenderer;
             _currentParticleSystem = _goldParticleSystem;
-            _currentType = CollectibleType.Gold;
+            currentType = CollectibleType.Gold;
         }
-        else if (_currentType == CollectibleType.Gold)
+        else if (currentType == CollectibleType.Gold)
         {
             gold.SetActive(false);
             diamond.SetActive(true);
             _currentMeshRenderer = _diamondMeshRenderer;
             _currentParticleSystem = _diamondParticleSystem;
-            _currentType = CollectibleType.Diamond;
+            currentType = CollectibleType.Diamond;
         }
     }
 
@@ -81,6 +81,8 @@ public class CollectibleController : MonoBehaviour
         _currentMeshRenderer.enabled = false;
         _boxCollider.enabled = false;
         _currentParticleSystem.Play();
+        
+        PlayerManager.Instance.IncreaseCollectedCollectiblesCount(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -119,6 +121,11 @@ public class CollectibleController : MonoBehaviour
         }else if (other.CompareTag("ATM"))
         {
             CollectedCollectiblesManager.Instance.OnATMTriggered(this, other.gameObject);
+        }else if (other.CompareTag("Conveyor Belt"))
+        {
+            _boxCollider.enabled = false;
+            CollectedCollectiblesManager.Instance.OnConveyorBeltTriggered(this);
+            PlayerManager.Instance.OnConveyorBeltTriggered(this);
         }
     }
 }

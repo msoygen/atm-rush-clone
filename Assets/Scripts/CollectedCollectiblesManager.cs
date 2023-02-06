@@ -52,14 +52,11 @@ public class CollectedCollectiblesManager : MonoBehaviour
         for (int i = _collectedCollectiblesList.Count - 1; i >= 0; i--)
         {
             int index = i;
-            
+
             CollectibleController collectible = _collectedCollectiblesList[index];
-            
+
             collectible.transform.DOScale(Vector3.one * 1.5f, 0.17f)
-                .OnComplete(() =>
-                {
-                    collectible.transform.DOScale(Vector3.one, 0.17f);
-                })
+                .OnComplete(() => { collectible.transform.DOScale(Vector3.one, 0.17f); })
                 .SetDelay(0.08f * (_collectedCollectiblesList.Count - index - 1));
         }
     }
@@ -68,12 +65,12 @@ public class CollectedCollectiblesManager : MonoBehaviour
     {
         if (_collectedCollectiblesList.Contains(collectible))
             return;
-        
+
         collectible.isCollected = true;
-        
+
         collectible.transform.position = transform.position;
         collectible.transform.SetParent(transform);
-            
+
         if (_collectedCollectiblesList.Count == 0)
         {
             collectible.transform.position = new Vector3(PlayerManager.Instance.characterTransform.position.x,
@@ -87,7 +84,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
                     collectible.transform.localPosition.y,
                     _collectedCollectiblesList[^1].transform.localPosition.z + 1.2f);
         }
-        
+
         _collectedCollectiblesList.Add(collectible);
 
         ShakeCollectedGameObjects();
@@ -140,9 +137,9 @@ public class CollectedCollectiblesManager : MonoBehaviour
                     Random.Range(PlayerManager.Instance.minX, PlayerManager.Instance.maxX),
                     _collectedCollectiblesList[i].transform.position.y,
                     _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f));
-                _collectedCollectiblesList[i].transform.DOMove(movePos,0.5f);
+                _collectedCollectiblesList[i].transform.DOMove(movePos, 0.5f);
             }
-        
+
             Debug.Log("loop 2");
             for (int i = _collectedCollectiblesList.Count - 1; i >= index; i--)
             {
@@ -186,7 +183,7 @@ public class CollectedCollectiblesManager : MonoBehaviour
     public void OnATMTriggered(CollectibleController collectible, GameObject atm)
     {
         int index = _collectedCollectiblesList.IndexOf(collectible);
-        if(index == _collectedCollectiblesList.Count - 1)
+        if (index == _collectedCollectiblesList.Count - 1)
         {
             RemoveCollectibleFromList(index);
             collectible.OnATMTriggered();
@@ -211,8 +208,22 @@ public class CollectedCollectiblesManager : MonoBehaviour
                     _collectedCollectiblesList[i].transform.position.z + Random.Range(4f, 6f)),
                 0.5f);
         }
-        
+
         _collectedCollectiblesList.Clear();
+    }
+
+    public void OnConveyorBeltTriggered(CollectibleController collectible)
+    {
+        collectible.transform.SetParent(null);
+        DOTween.Kill(collectible.transform);
+
+        collectible.transform.DOMoveZ(collectible.transform.position.z + 1.7f, 0.2f)
+            .OnComplete(() => 
+                collectible.transform.DOMoveX(-6f, 0.3f)
+                .OnComplete(() => PlayerManager.Instance.IncreaseCollectedCollectiblesCount(collectible))
+            );
+
+        RemoveCollectibleFromList(_collectedCollectiblesList.IndexOf(collectible));
     }
 
     private void OnTriggerEnter(Collider other)
